@@ -14,11 +14,11 @@ const MealItemForm = (props) => {
         
         const enteredAmount = amountInputRef.current.value;
         const enteredAmountNumber = +enteredAmount;
-        if (enteredAmount.trim().length === 0 || enteredAmountNumber >= 4 || enteredAmountNumber < 1) {
+        if (enteredAmount.trim().length === 0 || enteredAmountNumber > 5 || enteredAmountNumber < 1) {
             setAmountIsValid(false);     
             return;
         }
-
+        setAmountIsValid(true); 
         props.onAddToCart(enteredAmountNumber);
     }
     
