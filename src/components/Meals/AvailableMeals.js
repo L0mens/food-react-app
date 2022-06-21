@@ -36,10 +36,16 @@ const AvailableMeals = () => {
 
     const [meals,setMeals] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [httpError, setHttpError] = useState(null)
 
     useEffect(() => {
         fetch("https://cours-angular-11dba.firebaseio.com/meals.json")
-            .then(resp => {return resp.json()})
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error('Network response was not OK');
+                }
+                return resp.json()
+            })
             .then(meals => {
                 let all_meals = []
                 for (const m in meals)
@@ -53,8 +59,11 @@ const AvailableMeals = () => {
                 //Loading simulation
                 setTimeout(() => setIsLoading(false), 1000)
                 //setIsLoading(false)
-            }
-        )
+            })
+            .catch(error => {
+                setIsLoading(false)
+                setHttpError(error.message)
+            })
     }, []);
 
 
@@ -70,8 +79,9 @@ const AvailableMeals = () => {
     return (
         <section className={classes.meals}>
             <Card>
-                {isLoading && <ul>Chargement en cours</ul>}
-                <ul>{!isLoading && mealsList}</ul>
+                {httpError && <ul>{httpError}</ul>}
+                {isLoading && !httpError && <ul>Chargement en cours</ul>}
+                <ul>{!isLoading && !httpError && mealsList}</ul>
             </Card>
         </section>
     );
