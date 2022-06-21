@@ -35,6 +35,7 @@ const DUMMY_MEALS = [
 const AvailableMeals = () => {
 
     const [meals,setMeals] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetch("https://cours-angular-11dba.firebaseio.com/meals.json")
@@ -49,6 +50,9 @@ const AvailableMeals = () => {
                         price: meals[m].price,
                     })
                 setMeals(all_meals);
+                //Loading simulation
+                setTimeout(() => setIsLoading(false), 1000)
+                //setIsLoading(false)
             }
         )
     }, []);
@@ -66,7 +70,8 @@ const AvailableMeals = () => {
     return (
         <section className={classes.meals}>
             <Card>
-                <ul>{mealsList}</ul>
+                {isLoading && <ul>Chargement en cours</ul>}
+                <ul>{!isLoading && mealsList}</ul>
             </Card>
         </section>
     );
