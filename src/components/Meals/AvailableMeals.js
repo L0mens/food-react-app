@@ -3,6 +3,7 @@ import MealItem from "./MealItem/MealItem";
 import Card from "../UI/Card/Card";
 import {useEffect, useState} from "react";
 
+/*
 const DUMMY_MEALS = [
     {
         id: "m1",
@@ -29,6 +30,7 @@ const DUMMY_MEALS = [
         price: 18.99,
     },
 ];
+*/
 
 const AvailableMeals = () => {
 
